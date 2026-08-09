@@ -17,7 +17,7 @@ def start_browser_and_wait_for_login():
     input("login and press Enter")
     return driver
  
-if __name__ == "__main__":
+def main():
     driver = start_browser_and_wait_for_login()
 
     with open("parsed", "r") as f:
@@ -28,4 +28,7 @@ if __name__ == "__main__":
         link = f"https://spb.hh.ru/applicant/vacancy_response?vacancyId={id}&hhtmFrom=vacancy"
         driver.get(link)
         print(f"applied on id {id}")
-        sleep(1)        
+        sleep(2)
+
+if __name__ == "__main__":
+    main()
