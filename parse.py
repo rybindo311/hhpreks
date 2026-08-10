@@ -1,6 +1,6 @@
 import re
 
-from conf import *
+from conf import VACANCY_HTML, PARSED
 
 def extract_matching_refs(file_path):
     pattern = re.compile(r"https://hh\.ru/vacancy/(\d+)")

@@ -1,7 +1,3 @@
-__all__ = {
-    "SEARCH", "WORK_FORMAT", "VACANCY_HTML", "PARSED", "CHROME_BINARY"
-}
-
 import os
 
 from dotenv import load_dotenv
