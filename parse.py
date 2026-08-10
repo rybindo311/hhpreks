@@ -1,5 +1,6 @@
-
 import re
+
+from conf import *
 
 def extract_matching_refs(file_path):
     pattern = re.compile(r"https://hh\.ru/vacancy/(\d+)")
@@ -13,11 +14,13 @@ def extract_matching_refs(file_path):
 
 
 def main():
-    file_path = "temp/vacancies.html"
-    output_path = "temp/parsed"
+    file_path = VACANCY_HTML
+    output_path = PARSED
     refs = extract_matching_refs(file_path)
     with open(output_path, "w") as f:
         f.writelines(ref + '\n' for ref in refs)
 
 if __name__ == "__main__":
+    print("Начало парсинга.")
     main()
+    print("парсинг завершён.")
