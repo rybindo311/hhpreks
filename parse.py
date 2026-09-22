@@ -4,7 +4,7 @@ import json
 from conf import VACANCY_HTML, PARSED
 
 def extract_matching_refs(file_path):
-    pattern = re.compile(r"https://[a-zA-Z.]+hh\.ru/vacancy/(\d+)")
+    pattern = re.compile(r"https://(?:[a-zA-Z0-9-]+\.)?hh\.(?:ru|kz|by|uz|am|az|ge|kg|tj|tm)/vacancy/(\d+)")
 
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
