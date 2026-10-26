@@ -1,0 +1,25 @@
+services:
+  hh:
+    build: .
+    image: hh-autoresponse
+    init: true
+    stdin_open: true
+    tty: true
+    ports:
+      - "127.0.0.1:6080:6080"
+    volumes:
+      - type: bind
+        source: ./.env
+        target: /app/.env
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./applied.json
+        target: /app/applied.json
+        bind:
+          create_host_path: false
+      - chrome-profile:/data/chrome-profile
+
+volumes:
+  chrome-profile:

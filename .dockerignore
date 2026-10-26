@@ -1,0 +1,9 @@
+.git
+.idea
+.env
+.venv
+__pycache__
+temp
+applied.json
+poetry.lock
+README.md

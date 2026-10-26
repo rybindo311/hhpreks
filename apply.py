@@ -14,7 +14,14 @@ from selenium.common.exceptions import (
     StaleElementReferenceException,
 )
 
-from conf import CHROME_BINARY, PARSED, APPLIED, COVER_LETTER
+from conf import (
+    CHROME_BINARY,
+    PARSED,
+    APPLIED,
+    COVER_LETTER,
+    CHROME_PROFILE_DIR,
+    CHROME_EXTRA_ARGS,
+)
 
 PAGE_LOAD_TIMEOUT = 15  # секунд, после чего перестаём ждать полную загрузку страницы
 SUBMIT_BUTTON_SELECTOR = "button[data-qa='vacancy-response-submit-popup']"
@@ -104,6 +111,11 @@ def start_browser_and_wait_for_login():
     # не ждём полной догрузки всех ресурсов (трекеры/аналитика) —
     # достаточно того, что DOM готов к взаимодействию
     chrome_options.page_load_strategy = "eager"
+    if CHROME_PROFILE_DIR:
+        # профиль на диске сохраняет вход в аккаунт между запусками
+        chrome_options.add_argument(f"--user-data-dir={CHROME_PROFILE_DIR}")
+    for arg in CHROME_EXTRA_ARGS.split():
+        chrome_options.add_argument(arg)
 
     driver = webdriver.Chrome(options=chrome_options)
     driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
@@ -161,10 +173,11 @@ def main():
 
             sleep(2)
 
-            if counter == 150:
+            if counter == 200:
                 break
     finally:
         save_applied(applied_ids)
+        driver.quit()  # корректное закрытие сбрасывает куки профиля на диск
 
     print(f"Скрипт завершил работу. Обработано {counter} вакансий")
 

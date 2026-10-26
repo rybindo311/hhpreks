@@ -21,4 +21,24 @@
 1. Скопируйте шаблон:
    ```bash
    cp .env.example .env
+   ```
 2. Отредактируйте .env, указав свои значения.
+
+## 🐳 Запуск в Docker
+
+В образе уже есть Chromium, chromedriver и виртуальный дисплей, поэтому ставить браузер на хост не нужно.
+
+1. Создайте `.env` (см. выше). Значения `CHROME_BINARY`, `APPLIED` и `PARSED` внутри контейнера переопределяются образом.
+2. Соберите образ:
+   ```bash
+   docker compose build
+   ```
+3. Запустите весь пайплайн (`search.sh` → `parse.py` → `apply.py`):
+   ```bash
+   docker compose run --rm --service-ports hh
+   ```
+4. Когда скрипт попросит войти в аккаунт, откройте http://localhost:6080/vnc.html?autoconnect=true&resize=scale, войдите на hh.ru и нажмите Enter в терминале.
+
+Вход сохраняется в томе `chrome-profile`, поэтому при следующих запусках логиниться заново не нужно — достаточно нажать Enter. История откликов `applied.json` монтируется с хоста. Порт 6080 открыт только на `127.0.0.1`: у noVNC нет пароля.
+
+Дополнительные переменные: `CHROME_PROFILE_DIR` (каталог профиля Chrome) и `CHROME_EXTRA_ARGS` (доп. флаги Chrome через пробел).

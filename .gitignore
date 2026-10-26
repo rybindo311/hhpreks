@@ -69,7 +69,6 @@ logs/
 *.sqlite3
 
 # === DOCKER ===
-.dockerignore
 *.tar.gz
 *.tar
 
